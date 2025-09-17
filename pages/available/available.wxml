@@ -1,5 +1,7 @@
 <!--pages/available.wxml-->
-<text>pages/available.wxml</text>
-<mp-dialog title="test" show="{{true}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
+<!-- <text>pages/available.wxml</text> -->
+<!-- <mp-dialog title="test" show="{{true}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
     <view>test content</view>
-</mp-dialog>
+    
+</mp-dialog> -->
+<van-button type="primary">主要按钮</van-button>
