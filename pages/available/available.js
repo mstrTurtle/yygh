@@ -13,7 +13,13 @@ Page({
       ],
       selectedDepartment: null,
       
-      // 日期时间选择
+      // 号源选择
+      selectedSlot: null,
+      slots: [
+        {id:1, name: "2025年1月2日上午XXX时-XXX时"},
+        {id:2, name: "2025年2月2日上午XXX时-XXX时"},
+        {id:3, name: "2025年3月2日上午XXX时-XXX时"},
+      ],
       dateTimeVisible: false,
       minDate: new Date().getTime(),
       maxDate: new Date().getTime() + 30 * 24 * 60 * 60 * 1000, // 30天后
@@ -67,35 +73,13 @@ Page({
       });
     },
     
-    // 显示日期时间选择器
-    showDateTimePicker() {
-      this.setData({
-        dateTimeVisible: true
-      });
+
+    onSlotChange(event){
+        this.setData({
+            selectedSlot : event.detail
+        });
     },
     
-    // 确认日期时间选择
-    onDateTimeConfirm(event) {
-      const selectedTime = event.detail;
-      const date = new Date(selectedTime);
-      
-      // 格式化日期时间文本
-      const dateText = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-      
-      this.setData({
-        dateTimeVisible: false,
-        currentDateTime: selectedTime,
-        dateTimeText: dateText,
-        selectedDateTime: selectedTime
-      });
-    },
-    
-    // 取消日期时间选择
-    onDateTimeCancel() {
-      this.setData({
-        dateTimeVisible: false
-      });
-    },
     
     // 诉求内容变化
     onAppealChange(event) {

@@ -24,7 +24,21 @@
         </van-radio-group>
       </view>
 
-      <!-- 选择预约时段 (动态显示) -->
+      <!-- 选择预约时段（动态显示） -->
+      <view class="section" wx:if="{{ selectedDepartment }}">
+        <view class="section-title">选择预约时段</view>
+        <van-radio-group value="{{ selectedSlot }}" bind:change="onSlotChange">
+          <van-radio 
+            wx:for="{{ slots }}" 
+            wx:key="id" 
+            name="{{ item.id }}"
+            class="radio-item"
+          >
+            {{ item.name }}
+          </van-radio>
+        </van-radio-group>
+      </view>
+      <!-- 选择预约时段 (动态显示)
       <view class="section" wx:if="{{ selectedDepartment }}">
         <view class="section-title">选择预约时段</view>
         <van-field
@@ -43,10 +57,10 @@
           bind:confirm="onDateTimeConfirm"
           bind:cancel="onDateTimeCancel"
         />
-      </view>
+      </view> -->
 
       <!-- 填写诉求和联系人信息 (动态显示) -->
-      <view wx:if="{{ selectedDateTime }}">
+      <view wx:if="{{ selectedSlot }}">
         <!-- 填写诉求 -->
         <view class="section">
           <view class="section-title">填写诉求</view>
@@ -141,7 +155,7 @@
   <!-- 预约查询 tab -->
   <van-tab title="预约查询">
     <view class="query-container">
-      <view wx:if="{{ reservationList.length === 0 && !loading }}">
+    <view wx:if="{{ reservationList.length === 0 && !loading }}">
         <van-empty description="暂无预约记录" />
       </view>
       
