@@ -224,7 +224,7 @@ Page({
         this.setData({ activeTab: 1 });
         // 刷新预约列表
         this.fetchReservations();
-      }, 5000);
+      }, 1000);
     },
     
     // 获取预约列表
@@ -243,7 +243,7 @@ Page({
             contactName: "张三",
             contactPhone: "13800138000",
             appeal: "咨询相关业务办理流程",
-            status: 0, // 0:已受理, 1:已通过, 2:未通过, 3:已结束
+            status: "已通过", // 0:已受理, 1:已通过, 2:未通过, 3:已结束
             companions: [
               { idCard: "110101199001011234" }
             ]
@@ -255,7 +255,7 @@ Page({
             contactName: "李四",
             contactPhone: "13900139000",
             appeal: "办理相关证件",
-            status: 1,
+            status: "已受理",
             companions: []
           },
           {
@@ -265,7 +265,7 @@ Page({
             contactName: "王五",
             contactPhone: "13700137000",
             appeal: "反馈相关问题",
-            status: 3,
+            status: "已结束",
             companions: [
               { idCard: "310101199203045678" },
               { idCard: "440101199506078901" }
@@ -277,7 +277,7 @@ Page({
           reservationList: mockData,
           loading: false
         });
-      }, 5000);
+      }, 1000);
     },
     
     // 显示预约详情
@@ -299,17 +299,6 @@ Page({
         detailVisible: false,
         currentDetail: null
       });
-    },
-    
-    // 获取状态文本
-    getStatusText(status) {
-      switch(status) {
-        case 0: return "已受理";
-        case 1: return "已通过";
-        case 2: return "未通过";
-        case 3: return "已结束";
-        default: return "未知状态";
-      }
     },
     
     // 获取状态样式类

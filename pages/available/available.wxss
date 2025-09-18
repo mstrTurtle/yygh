@@ -50,8 +50,11 @@
     text-align: center;
   }
   
-  .reservation-card {
-    margin-bottom: 16px;
+  .reservation-card .van-card{
+    margin-bottom: 32px;
+    box-shadow: 2px 2px 6px grey;
+    border:1px solid black;
+    border-radius: 5px;
   }
   
   .status {

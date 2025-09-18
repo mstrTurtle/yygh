@@ -176,8 +176,9 @@
           data-id="{{ item.id }}"
         >
           <view slot="footer">
-            <view class="status {{ getStatusClass(item.status) }}">
-              {{ getStatusText(item.status) }}
+            <!-- <view class="status {{ getStatusClass(item.status) }}"> -->
+                <view class="status">
+                {{item.status}}
             </view>
           </view>
         </van-card>
