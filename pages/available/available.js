@@ -238,7 +238,7 @@ Page({
         const mockData = [
           {
             id: 1,
-            departmentName: "部门一",
+            departmentName: "区人民法院",
             dateTime: "2023-06-15 10:00",
             contactName: "张三",
             contactPhone: "13800138000",
@@ -250,7 +250,7 @@ Page({
           },
           {
             id: 2,
-            departmentName: "部门三",
+            departmentName: "区税务局",
             dateTime: "2023-06-18 14:30",
             contactName: "李四",
             contactPhone: "13900139000",
@@ -260,7 +260,7 @@ Page({
           },
           {
             id: 3,
-            departmentName: "部门二",
+            departmentName: "区住建局",
             dateTime: "2023-06-10 09:15",
             contactName: "王五",
             contactPhone: "13700137000",
@@ -291,6 +291,18 @@ Page({
           detailVisible: true
         });
       }
+    },
+
+    showDetail(event) {
+        const id = event.currentTarget.dataset.id
+        const detail = this.data.reservationList.find(item => item.id === id);
+      
+        if (detail) {
+            this.setData({
+            currentDetail: detail,
+            detailVisible: true
+            });
+        }
     },
     
     // 关闭详情弹窗

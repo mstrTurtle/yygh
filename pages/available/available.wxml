@@ -175,10 +175,14 @@
           bind:click="showReservationDetail"
           data-id="{{ item.id }}"
         >
+        <view slot="price">
+            {{item.status}}
+        </view>
           <view slot="footer">
             <!-- <view class="status {{ getStatusClass(item.status) }}"> -->
                 <view class="status">
-                {{item.status}}
+                
+                <van-button bind:tap="showDetail" data-id="{{item.id}}">查看详情</van-button>
             </view>
           </view>
         </van-card>
@@ -190,7 +194,7 @@
 
 <!-- 预约详情弹窗 -->
 <van-popup
-  visible="{{ detailVisible }}"
+  show="{{ detailVisible }}"
   bind:close="closeDetailPopup"
   position="bottom"
   custom-style="height: 80%;"
