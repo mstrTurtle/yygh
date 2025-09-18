@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/available/available",
     "pages/index/index",
-    "pages/logs/logs",
-    "pages/available/available"
+    "pages/logs/logs"
   ],
   "window": {
     "navigationBarTextStyle": "black",

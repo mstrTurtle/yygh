@@ -4,4 +4,200 @@
     <view>test content</view>
     
 </mp-dialog> -->
-<van-button type="primary">主要按钮</van-button>
+
+<van-tabs active="{{ activeTab }}" bind:change="onTabChange" sticky>
+  <!-- 进行预约 tab -->
+  <van-tab title="进行预约">
+    <view class="reservation-container">
+      <!-- 选择部门 -->
+      <view class="section">
+        <view class="section-title">选择部门</view>
+        <van-radio-group value="{{ selectedDepartment }}" bind:change="onDepartmentChange">
+          <van-radio 
+            wx:for="{{ departments }}" 
+            wx:key="id" 
+            name="{{ item.id }}"
+            class="radio-item"
+          >
+            {{ item.name }}
+          </van-radio>
+        </van-radio-group>
+      </view>
+
+      <!-- 选择预约时段 (动态显示) -->
+      <view class="section" wx:if="{{ selectedDepartment }}">
+        <view class="section-title">选择预约时段</view>
+        <van-field
+          value="{{ dateTimeText }}"
+          label="日期时间"
+          placeholder="请选择预约时间"
+          bind:tap="showDateTimePicker"
+          readonly
+        />
+        <van-datetime-picker
+          visible="{{ dateTimeVisible }}"
+          type="datetime"
+          min-date="{{ minDate }}"
+          max-date="{{ maxDate }}"
+          value="{{ currentDateTime }}"
+          bind:confirm="onDateTimeConfirm"
+          bind:cancel="onDateTimeCancel"
+        />
+      </view>
+
+      <!-- 填写诉求和联系人信息 (动态显示) -->
+      <view wx:if="{{ selectedDateTime }}">
+        <!-- 填写诉求 -->
+        <view class="section">
+          <view class="section-title">填写诉求</view>
+          <van-field
+            value="{{ appeal }}"
+            label="诉求内容"
+            placeholder="请简要描述您的诉求"
+            type="textarea"
+            rows="4"
+            bind:change="onAppealChange"
+          />
+        </view>
+
+        <!-- 联系人信息 -->
+        <view class="section">
+          <view class="section-title">联系人信息</view>
+          <van-field
+            value="{{ contactName }}"
+            label="姓名"
+            placeholder="请输入您的姓名"
+            bind:change="onContactNameChange"
+          />
+          <van-field
+            value="{{ contactPhone }}"
+            label="手机号码"
+            placeholder="请输入手机号码"
+            type="number"
+            bind:change="onContactPhoneChange"
+          />
+          <van-field
+            value="{{ contactIdCard }}"
+            label="身份证号"
+            placeholder="请输入身份证号码"
+            bind:change="onContactIdCardChange"
+          />
+        </view>
+
+        <!-- 同行人信息 -->
+        <view class="section">
+          <view class="section-title">
+            同行人信息
+            <van-button 
+              size="small" 
+              type="primary" 
+              round 
+              bind:click="addCompanion"
+              wx:if="{{ companions.length < 4 }}"
+            >
+              + 添加
+            </van-button>
+          </view>
+          
+          <view wx:for="{{ companions }}" wx:key="index" class="companion-item">
+            <van-field
+              value="{{ item.idCard }}"
+              label="同行人 {{ index + 1 }} 身份证号"
+              placeholder="请输入身份证号码"
+              bind:change="onCompanionIdChange"
+              data-index="{{ index }}"
+            />
+            <van-button 
+              size="small" 
+              type="danger" 
+              round 
+              bind:click="removeCompanion"
+              data-index="{{ index }}"
+            >
+              - 移除
+            </van-button>
+          </view>
+          
+          <view class="tips" wx:if="{{ companions.length > 0 }}">
+            最多可添加4位同行人
+          </view>
+        </view>
+
+        <!-- 提交按钮 -->
+        <view class="submit-section">
+          <van-button 
+            type="primary" 
+            round 
+            bind:click="submitReservation"
+            disabled="{{ !canSubmit() }}"
+          >
+            提交预约
+          </van-button>
+        </view>
+      </view>
+    </view>
+  </van-tab>
+
+  <!-- 预约查询 tab -->
+  <van-tab title="预约查询">
+    <view class="query-container">
+      <view wx:if="{{ reservationList.length === 0 && !loading }}">
+        <van-empty description="暂无预约记录" />
+      </view>
+      
+      <view wx:else>
+        <van-card 
+          wx:for="{{ reservationList }}" 
+          wx:key="id"
+          title="{{ item.departmentName }}"
+          desc="{{ item.dateTime }}"
+          class="reservation-card"
+          bind:click="showReservationDetail"
+          data-id="{{ item.id }}"
+        >
+          <view slot="footer">
+            <view class="status {{ getStatusClass(item.status) }}">
+              {{ getStatusText(item.status) }}
+            </view>
+          </view>
+        </van-card>
+      </view>
+    </view>
+  </van-tab>
+</van-tabs>
+
+<!-- 预约详情弹窗 -->
+<van-popup
+  visible="{{ detailVisible }}"
+  bind:close="closeDetailPopup"
+  position="bottom"
+  custom-style="height: 80%;"
+>
+  <view class="detail-header">
+    <view class="detail-title">预约详情</view>
+    <van-button 
+      type="text" 
+      size="small" 
+      bind:click="closeDetailPopup"
+    >
+      关闭
+    </van-button>
+  </view>
+  
+  <van-cell-group class="detail-content">
+    <van-cell title="部门" value="{{ currentDetail.departmentName }}" />
+    <van-cell title="预约时间" value="{{ currentDetail.dateTime }}" />
+    <van-cell title="联系人" value="{{ currentDetail.contactName }}" />
+    <van-cell title="联系电话" value="{{ currentDetail.contactPhone }}" />
+    <van-cell title="诉求内容" value="{{ currentDetail.appeal }}" />
+    <van-cell title="处理状态" value="{{ getStatusText(currentDetail.status) }}" />
+    
+    <van-cell title="同行人" wx:if="{{ currentDetail.companions && currentDetail.companions.length > 0 }}">
+      <view slot="value">
+        <view wx:for="{{ currentDetail.companions }}" wx:key="index">
+          同行人 {{ index + 1 }}: {{ item.idCard }}
+        </view>
+      </view>
+    </van-cell>
+  </van-cell-group>
+</van-popup>
