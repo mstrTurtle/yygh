@@ -5,20 +5,20 @@ Page({
       
       // 部门数据
       departments: [
-        { id: 1, name: "部门一" },
-        { id: 2, name: "部门二" },
-        { id: 3, name: "部门三" },
-        { id: 4, name: "部门四" },
-        { id: 5, name: "部门五" }
+        { id: 1, name: "区人民法院" },
+        { id: 2, name: "区检察院" },
+        { id: 3, name: "区住建局" },
+        { id: 4, name: "区人社局" },
+        { id: 5, name: "区纪委" }
       ],
       selectedDepartment: null,
       
       // 号源选择
       selectedSlot: null,
       slots: [
-        {id:1, name: "2025年1月2日上午XXX时-XXX时"},
-        {id:2, name: "2025年2月2日上午XXX时-XXX时"},
-        {id:3, name: "2025年3月2日上午XXX时-XXX时"},
+        {id:1, name: "2025年9月19日（周五）上午9时-10时"},
+        {id:2, name: "2025年9月19日（周五）上午10时-11时"},
+        {id:3, name: "2025年9月19日（周五）上午11时-12时"},
       ],
       dateTimeVisible: false,
       minDate: new Date().getTime(),
