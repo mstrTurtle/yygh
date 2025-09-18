@@ -151,26 +151,26 @@ Page({
       } = this.data;
       
       // 基本信息验证
-      if (!selectedDepartment || !selectedDateTime || !appeal || !contactName || !contactPhone || !contactIdCard) {
+      if (!selectedDepartment || !selectedSlot || !appeal || !contactName || !contactPhone || !contactIdCard) {
         return false;
       }
       
-      // 验证手机号
-      if (!/^1[3-9]\d{9}$/.test(contactPhone)) {
-        return false;
-      }
+    //   // 验证手机号
+    //   if (!/^1[3-9]\d{9}$/.test(contactPhone)) {
+    //     return false;
+    //   }
       
-      // 验证身份证号(简单验证)
-      if (!/^\d{17}[\dXx]$/.test(contactIdCard)) {
-        return false;
-      }
+    //   // 验证身份证号(简单验证)
+    //   if (!/^\d{17}[\dXx]$/.test(contactIdCard)) {
+    //     return false;
+    //   }
       
-      // 验证所有已填写的同行人身份证
-      for (const companion of this.data.companions) {
-        if (companion.idCard && !/^\d{17}[\dXx]$/.test(companion.idCard)) {
-          return false;
-        }
-      }
+    //   // 验证所有已填写的同行人身份证
+    //   for (const companion of this.data.companions) {
+    //     if (companion.idCard && !/^\d{17}[\dXx]$/.test(companion.idCard)) {
+    //       return false;
+    //     }
+    //   }
       
       return true;
     },
@@ -224,7 +224,7 @@ Page({
         this.setData({ activeTab: 1 });
         // 刷新预约列表
         this.fetchReservations();
-      }, 1000);
+      }, 5000);
     },
     
     // 获取预约列表
@@ -277,7 +277,7 @@ Page({
           reservationList: mockData,
           loading: false
         });
-      }, 1000);
+      }, 5000);
     },
     
     // 显示预约详情

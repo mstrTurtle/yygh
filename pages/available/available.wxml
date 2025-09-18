@@ -70,6 +70,7 @@
             placeholder="请简要描述您的诉求"
             type="textarea"
             rows="4"
+            autosize
             bind:change="onAppealChange"
           />
         </view>
@@ -143,7 +144,6 @@
             type="primary" 
             round 
             bind:click="submitReservation"
-            disabled="{{ !canSubmit() }}"
           >
             提交预约
           </van-button>
@@ -154,9 +154,15 @@
 
   <!-- 预约查询 tab -->
   <van-tab title="预约查询">
+  <view wx:if="{{loading}}">
+  <text>加载中</text>
+  </view>
+  
+  <view wx:else>
     <view class="query-container">
     <view wx:if="{{ reservationList.length === 0 && !loading }}">
         <van-empty description="暂无预约记录" />
+        <text>暂无预约记录</text>
       </view>
       
       <view wx:else>
@@ -177,6 +183,7 @@
         </van-card>
       </view>
     </view>
+</view>
   </van-tab>
 </van-tabs>
 
